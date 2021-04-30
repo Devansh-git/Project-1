@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Project 1</string>
+    <string name="TaskType">Task Type</string>
+    <string name="Task">Task</string>
+    <string name="cd" />
+    <string name="comDate">Completion Date</string>
+    <string name="notDate">Notify Date</string>
+    <string name="notTime">Notify Time</string>
+</resources>
