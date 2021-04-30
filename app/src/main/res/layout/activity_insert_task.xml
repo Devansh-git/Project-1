@@ -146,7 +146,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/teal_200"
-        app:srcCompat="@drawable/ic_baseline_save_24" />
+        app:srcCompat="@drawable/ic_baseline_save_24"
+        android:onClick="add"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

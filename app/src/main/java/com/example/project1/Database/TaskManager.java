@@ -12,10 +12,11 @@ import androidx.annotation.Nullable;
 import com.example.project1.TaskModel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class TaskManager extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "Tasks.DB";
+    private static final String DATABASE_NAME = "Task.DB";
     private static final int DATABASE_VERSION = 1;
 
 
@@ -38,7 +39,7 @@ public class TaskManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         tableCreatorString = "CREATE TABLE "+ tableName + "(ID Integer Primary Key AUTOINCREMENT, TaskType TEXT, Task Text, CompleteDate Text, NotifyDate Text, NotifyTime Text, IsComplete Text);";
-        Log.i("THis is string  --- ", tableCreatorString);
+
         db.execSQL(tableCreatorString);
     }
 
@@ -68,10 +69,42 @@ public class TaskManager extends SQLiteOpenHelper {
 
     }
 
-    public TaskModel getOne() throws Exception{
+    public ArrayList<TaskModel> getAll() throws Exception{
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor  = db.rawQuery("select * from " + tableName + " where " + ID + "='1'"  ,null);
+        Cursor cursor  = db.rawQuery("SELECT * FROM " + tableName,null);
+
+        ArrayList<TaskModel> allTasks = new ArrayList<>();
+
+        if(cursor.moveToFirst())
+        {
+            do {
+                TaskModel tm = new TaskModel();
+
+                tm.setId(cursor.getInt(0));
+                tm.setTaskType(cursor.getString(1));
+                tm.setTask(cursor.getString(2));
+                tm.setDate(cursor.getString(3));
+                tm.setNotifyDate(cursor.getString(4));
+                tm.setNotifyTime(cursor.getString(5));
+                tm.setCompleted(Boolean.parseBoolean(cursor.getString(6)));
+
+                allTasks.add(tm);
+
+            }while(cursor.moveToNext());
+        }else{
+            allTasks=null;
+
+        }
+        db.close();
+
+        return allTasks;
+    }
+
+    public TaskModel getById(int Id) throws Exception{
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor  = db.rawQuery("select * from " + tableName + " where " + ID + "=' "+ Id + "'"  ,null);
         TaskModel tm = new TaskModel();
         if(cursor.moveToFirst())
         {
@@ -92,4 +125,33 @@ public class TaskManager extends SQLiteOpenHelper {
         db.close();
         return tm;
     }
+
+    public boolean setCompleted(TaskModel tm)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+
+
+        cv.put("TaskType",tm.getTaskType());
+        cv.put("Task",tm.getTask());
+        cv.put("CompleteDate",tm.getDate());
+        cv.put("NotifyDate",tm.getNotifyDate());
+        cv.put("NotifyTime",tm.getNotifyTime());
+        cv.put("IsComplete","0");
+
+        int number  = db.update(tableName,cv,"ID = ?",new String[]{String.valueOf(tm.getId())});
+
+        if(number==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+
 }

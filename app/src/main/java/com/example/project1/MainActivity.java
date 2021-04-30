@@ -29,20 +29,41 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView TaskRecycleView ;
 
-    private ArrayList<DisplayTask> displayTasks;
+    private ArrayList<DisplayTask> allTasks;
+    private ArrayList<DisplayTask> nonCompletedTasks;
+
+
     private TaskAdapter taskAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     TaskManager taskManager;
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupDatabase();
+        startDisplay();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        displayTasks = new ArrayList<>();
+        setupDatabase();
+        startDisplay();
+
+    }
+
+    public void setCompleted()
+    {
+
+    }
+
+    public void setupDatabase()
+    {
+        allTasks = new ArrayList<>();
 
         try{
             taskManager = new TaskManager(this);
@@ -51,45 +72,33 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Error : ",e.getMessage());
         }
 
-        TaskModel task = new TaskModel(1,"Fix","Door","12/12/2021","14/12/2021","12:00",true);
+
+
 
         try{
-            taskManager.addOne(task);
-            taskManager.addOne(task);
-            Toast.makeText(MainActivity.this,"added",Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Log.i("Error : ",e.getMessage());
-        }
-
-        try{
-            TaskModel tm = taskManager.getOne();
-            displayTasks.add(new DisplayTask(tm.id,tm.task,tm.getDate(),R.drawable.cart,tm.getCompleted()));
-            Toast.makeText(MainActivity.this,tm.getTask(),Toast.LENGTH_SHORT).show();
+            List<TaskModel> tasksFromDatabase = taskManager.getAll();
+            for(int i=0;i<tasksFromDatabase.size();i++)
+            {
+                allTasks.add(new DisplayTask(tasksFromDatabase.get(i).getId(),tasksFromDatabase.get(i).getTask(),tasksFromDatabase.get(i).getDate(),tasksFromDatabase.get(i).getTaskType(),tasksFromDatabase.get(i).getCompleted(),tasksFromDatabase.get(i)));
+            }
 
         } catch (Exception e) {
             Log.i("Error : ",e.getMessage());
         }
+    }
+
+    public void startDisplay()
+    {
+
 
 
         TaskRecycleView = (RecyclerView)findViewById(R.id.displayTaskRecycle);
 
         layoutManager = new LinearLayoutManager(this);
-
-
-
-        taskAdapter = new TaskAdapter(displayTasks);
-
-
+        taskAdapter = new TaskAdapter(allTasks,MainActivity.this);
         TaskRecycleView.setLayoutManager(layoutManager);
         TaskRecycleView.setAdapter(taskAdapter);
-
-
-
-
-
     }
-
-
 
 
 

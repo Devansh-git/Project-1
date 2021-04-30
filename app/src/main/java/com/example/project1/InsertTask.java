@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.project1.Adapters.SpinnerAdapter;
+import com.example.project1.Database.TaskManager;
 
 
 import java.sql.Date;
@@ -27,7 +29,10 @@ public class InsertTask extends AppCompatActivity {
     Spinner spntaskType;
     EditText Task,comDate,notDate,notTime;
 
+    TaskManager taskManager;
 
+
+    String taskType,task,CompletionDate,NotifyDate,NotifyTime;
 
 
     @Override
@@ -37,6 +42,13 @@ public class InsertTask extends AppCompatActivity {
 
         setUpTaskType();
 
+        try{
+            taskManager = new TaskManager(this);
+        }
+        catch (Exception e)
+        {
+            Log.e("Error : ", e.getMessage() );
+        }
 
 
 
@@ -50,8 +62,7 @@ public class InsertTask extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TaskType clickedItem = (TaskType) parent.getItemAtPosition(position);
-                String ClickedTask = clickedItem.getTaskType();
-                Toast.makeText(InsertTask.this,ClickedTask,Toast.LENGTH_LONG).show();
+                taskType=clickedItem.getTaskType();
             }
 
             @Override
@@ -61,10 +72,10 @@ public class InsertTask extends AppCompatActivity {
         });
 
 
-        Task = (EditText)findViewById(R.id.etTask);
-        comDate = (EditText)findViewById(R.id.etCompletionDate);
-        notDate = (EditText)findViewById(R.id.etNotifyDate);
-        notTime = (EditText)findViewById(R.id.etNotifyTime);
+
+
+
+
 
     }
 
@@ -79,6 +90,34 @@ public class InsertTask extends AppCompatActivity {
         taskTypes.add(new TaskType("Buy",R.drawable.cart));
     }
 
+
+    public void add(View view)
+    {
+
+        Task = (EditText)findViewById(R.id.etTask);
+        task = Task.getText().toString();
+        comDate = (EditText)findViewById(R.id.etCompletionDate);
+        CompletionDate = comDate.getText().toString();
+        notDate = (EditText)findViewById(R.id.etNotifyDate);
+        NotifyDate = notDate.getText().toString();
+        notTime = (EditText)findViewById(R.id.etNotifyTime);
+        NotifyTime = notDate.getText().toString();
+
+        TaskModel insertTask = new TaskModel();
+        insertTask.setTaskType(taskType);
+        insertTask.setTask(task);
+        insertTask.setDate(CompletionDate);
+        insertTask.setNotifyDate(NotifyDate);
+        insertTask.setNotifyTime(NotifyTime);
+        insertTask.setCompleted(false);
+
+        try {
+            taskManager.addOne(insertTask);
+        } catch (Exception e) {
+            Log.e("Failed to add because - ", e.getMessage() );
+        }
+
+    }
 
 
     public void goBack(View view)

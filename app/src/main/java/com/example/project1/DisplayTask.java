@@ -1,12 +1,18 @@
 package com.example.project1;
 
+import com.example.project1.Database.TaskManager;
+
 public class DisplayTask {
 
     int id;
     String Task ;
     String TaskDate ;
-    int TaskTypeLogo;
+    String TaskType;
     Boolean isCompleted ;
+    TaskModel taskModel;
+
+
+    public DisplayTask(){}
 
     public int getId() {
         return id;
@@ -20,20 +26,36 @@ public class DisplayTask {
         return TaskDate;
     }
 
-    public int getTaskTypeLogo() {
-        return TaskTypeLogo;
-    }
+
 
     public Boolean getCompleted() {
         return isCompleted;
     }
 
-    public DisplayTask(int id, String task, String taskDate, int taskTypeLogo, Boolean isCompleted) {
+    public DisplayTask(int id, String task, String taskDate, String taskType, Boolean isCompleted,TaskModel taskModel) {
         this.id = id;
         Task = task;
         TaskDate = taskDate;
-        TaskTypeLogo = taskTypeLogo;
+        TaskType=taskType;
         this.isCompleted = isCompleted;
+        this.taskModel=taskModel;
+
+    }
+
+    public String getTaskType() {
+        return TaskType;
+    }
+
+    public TaskModel getTaskModel() {
+        return taskModel;
+    }
+
+    public void setTaskModel(TaskModel taskModel) {
+        this.taskModel = taskModel;
+    }
+
+    public void setTaskType(String taskType) {
+        TaskType = taskType;
     }
 
     public void setId(int id) {
@@ -48,9 +70,7 @@ public class DisplayTask {
         TaskDate = taskDate;
     }
 
-    public void setTaskTypeLogo(int taskTypeLogo) {
-        TaskTypeLogo = taskTypeLogo;
-    }
+
 
     public void setCompleted(Boolean completed) {
         isCompleted = completed;
