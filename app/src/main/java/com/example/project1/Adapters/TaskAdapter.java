@@ -91,7 +91,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
 
-        if(dt.getCompleted()==true)
+        if(dt.getCompleted()==1)
         {
             holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
         }
@@ -106,17 +106,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             @Override
             public void onClick(View v) {
 
+                taskManager.setCompleted(dt.getTaskModel());
 
-                boolean done = taskManager.setCompleted(dt.getTaskModel());
 
-                if(done==true)
-                {
-                    holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
-                }
-                else
-                {
-                    holder.taskLayout.setBackgroundResource(R.drawable.card_incomplete_layout);
-                }
+                holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
+
+
+
+
+
             }
         });
 

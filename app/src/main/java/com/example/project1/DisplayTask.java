@@ -8,7 +8,7 @@ public class DisplayTask {
     String Task ;
     String TaskDate ;
     String TaskType;
-    Boolean isCompleted ;
+    int isCompleted ;
     TaskModel taskModel;
 
 
@@ -28,11 +28,11 @@ public class DisplayTask {
 
 
 
-    public Boolean getCompleted() {
+    public int getCompleted() {
         return isCompleted;
     }
 
-    public DisplayTask(int id, String task, String taskDate, String taskType, Boolean isCompleted,TaskModel taskModel) {
+    public DisplayTask(int id, String task, String taskDate, String taskType, int isCompleted,TaskModel taskModel) {
         this.id = id;
         Task = task;
         TaskDate = taskDate;
@@ -72,7 +72,7 @@ public class DisplayTask {
 
 
 
-    public void setCompleted(Boolean completed) {
+    public void setCompleted(int completed) {
         isCompleted = completed;
     }
 }

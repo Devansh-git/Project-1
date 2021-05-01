@@ -2,6 +2,7 @@ package com.example.project1.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -41,6 +42,8 @@ public class TaskManager extends SQLiteOpenHelper {
         tableCreatorString = "CREATE TABLE "+ tableName + "(ID Integer Primary Key AUTOINCREMENT, TaskType TEXT, Task Text, CompleteDate Text, NotifyDate Text, NotifyTime Text, IsComplete Text);";
 
         db.execSQL(tableCreatorString);
+
+        deleteOne(1);
     }
 
 
@@ -48,6 +51,7 @@ public class TaskManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);
         //recreate the table
+
         onCreate(db);
     }
 
@@ -87,7 +91,7 @@ public class TaskManager extends SQLiteOpenHelper {
                 tm.setDate(cursor.getString(3));
                 tm.setNotifyDate(cursor.getString(4));
                 tm.setNotifyTime(cursor.getString(5));
-                tm.setCompleted(Boolean.parseBoolean(cursor.getString(6)));
+                tm.setCompleted(Integer.valueOf(cursor.getString(6)));
 
                 allTasks.add(tm);
 
@@ -99,6 +103,13 @@ public class TaskManager extends SQLiteOpenHelper {
         db.close();
 
         return allTasks;
+    }
+
+    public void deleteOne(int i)
+    {
+        SQLiteDatabase db =this.getWritableDatabase();
+
+        db.delete(tableName,   "ID = ? ",new String[]{String.valueOf(i)});
     }
 
     public TaskModel getById(int Id) throws Exception{
@@ -115,7 +126,7 @@ public class TaskManager extends SQLiteOpenHelper {
             tm.setDate(cursor.getString(3));
             tm.setNotifyDate(cursor.getString(4));
             tm.setNotifyTime(cursor.getString(5));
-            tm.setCompleted(Boolean.parseBoolean(cursor.getString(6)));
+            tm.setCompleted(Integer.valueOf(cursor.getString(6)));
 
 
         }else
@@ -138,7 +149,7 @@ public class TaskManager extends SQLiteOpenHelper {
         cv.put("CompleteDate",tm.getDate());
         cv.put("NotifyDate",tm.getNotifyDate());
         cv.put("NotifyTime",tm.getNotifyTime());
-        cv.put("IsComplete","0");
+        cv.put("IsComplete",1);
 
         int number  = db.update(tableName,cv,"ID = ?",new String[]{String.valueOf(tm.getId())});
 

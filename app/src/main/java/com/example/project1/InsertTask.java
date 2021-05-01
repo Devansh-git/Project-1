@@ -109,7 +109,7 @@ public class InsertTask extends AppCompatActivity {
         insertTask.setDate(CompletionDate);
         insertTask.setNotifyDate(NotifyDate);
         insertTask.setNotifyTime(NotifyTime);
-        insertTask.setCompleted(false);
+        insertTask.setCompleted(0);
 
         try {
             taskManager.addOne(insertTask);

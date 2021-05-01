@@ -10,9 +10,9 @@ public class TaskModel {
     public String Date;
     public String notifyDate;
     public String notifyTime;
-    public Boolean isCompleted;
+    public int isCompleted;
 
-    public TaskModel(int id, String taskType, String task, String date, String notifyDate, String notifyTime, Boolean isCompleted) {
+    public TaskModel(int id, String taskType, String task, String date, String notifyDate, String notifyTime, int isCompleted) {
         this.id = id;
         this.taskType = taskType;
         this.task = task;
@@ -72,11 +72,11 @@ public class TaskModel {
         this.notifyTime = notifyTime;
     }
 
-    public Boolean getCompleted() {
+    public int getCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(Boolean completed) {
+    public void setCompleted(int completed) {
         isCompleted = completed;
     }
 
