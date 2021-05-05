@@ -6,4 +6,6 @@
     <string name="comDate">Completion Date</string>
     <string name="notDate">Notify Date</string>
     <string name="notTime">Notify Time</string>
+    <string name="Done">Done</string>
+    <string name="Undo">Undo</string>
 </resources>

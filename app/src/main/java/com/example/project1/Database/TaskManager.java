@@ -164,5 +164,32 @@ public class TaskManager extends SQLiteOpenHelper {
 
     }
 
+    public boolean setInCompleted(TaskModel tm)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+
+
+        cv.put("TaskType",tm.getTaskType());
+        cv.put("Task",tm.getTask());
+        cv.put("CompleteDate",tm.getDate());
+        cv.put("NotifyDate",tm.getNotifyDate());
+        cv.put("NotifyTime",tm.getNotifyTime());
+        cv.put("IsComplete",0);
+
+        int number  = db.update(tableName,cv,"ID = ?",new String[]{String.valueOf(tm.getId())});
+
+        if(number==1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
 
 }

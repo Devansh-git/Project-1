@@ -94,9 +94,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         if(dt.getCompleted()==1)
         {
             holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
+            holder.btnCompleted.setText(R.string.Undo);
         }
         else
         {
+            holder.btnCompleted.setText(R.string.Done);
             holder.taskLayout.setBackgroundResource(R.drawable.card_incomplete_layout);
         }
 
@@ -105,14 +107,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.btnCompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(dt.getCompleted()==0)
+                {
+                    taskManager.setCompleted(dt.getTaskModel());
 
-                taskManager.setCompleted(dt.getTaskModel());
+                    holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
 
+                    holder.btnCompleted.setText(R.string.Undo);
 
-                holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
-
-
-
+                }
+                else if(dt.getCompleted()==1)
+                {
+                    taskManager.setInCompleted(dt.getTaskModel());
+                    holder.taskLayout.setBackgroundResource(R.drawable.card_incomplete_layout);
+                    holder.btnCompleted.setText(R.string.Done);
+                }
 
 
             }
@@ -120,6 +129,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
 
     }
+
+
 
     @Override
     public int getItemCount() {

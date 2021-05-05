@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project1.Adapters.SpinnerAdapter;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity<var> extends AppCompatActivity {
 
     RecyclerView TaskRecycleView ;
 
@@ -41,21 +43,27 @@ public class MainActivity extends AppCompatActivity {
     TaskManager taskManager;
 
 
+    private double incomplete;
+    private double all;
+
+    ProgressBar pbUi;
+    TextView pbText , Messsage;
+
     @Override
     protected void onStart() {
         super.onStart();
-        setupDatabase();
-        startDisplay();
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        aSwitch = (Switch)findViewById(R.id.switchShowInComplete);
+
+        incomplete=0;
+        all=0;
+
 
         setupDatabase();
         startDisplay();
+
+        pbUi = (ProgressBar)findViewById(R.id.pbUI);
+        pbText = (TextView)findViewById(R.id.pbText);
+        Messsage = (TextView)findViewById(R.id.tvMessage);
 
 
         aSwitch.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +79,66 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        double ratio = (all - incomplete)/all  ;
+
+         int displayPer = (int) (ratio*100);
+
+        pbUi.setProgress(displayPer);
+        pbText.setText( displayPer + " %");
+
+       if(displayPer<=25)
+       {
+           Messsage.setText("Completed "+ displayPer + "% of your tasks.\n"+ "Make sure you complete the tasks.");
+       }
+       else if(displayPer<=50)
+       {
+           Messsage.setText("Completed "+ displayPer + "% of your tasks.\n"+" Keep up the work.");
+       }
+       else if(displayPer<=75)
+       {
+           Messsage.setText("Completed "+ displayPer + "% of your tasks.\n"+ "Almost there.");
+       }
+        else if(displayPer<100)
+       {
+           Messsage.setText("Completed "+ displayPer + "% of your tasks.\n" + "You can relax a bit.");
+       }
+        else if(displayPer==100)
+       {
+           Messsage.setText("All Tasks Done !!");
+       }
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        aSwitch = (Switch)findViewById(R.id.switchShowInComplete);
+
+
+
+        setupDatabase();
+        startDisplay();
+
+
+
+        aSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(aSwitch.isChecked()==true)
+                {
+                    setAll();
+                }
+                else  if(aSwitch.isChecked()==false)
+                {
+                    startDisplay();
+                }
+            }
+        });
+
+
+
 
     }
 
@@ -104,13 +172,19 @@ public class MainActivity extends AppCompatActivity {
                 if(tasksFromDatabase.get(i).getCompleted()==0)
                 {
                     nonCompletedTasks.add(new DisplayTask(tasksFromDatabase.get(i).getId(),tasksFromDatabase.get(i).getTask(),tasksFromDatabase.get(i).getDate(),tasksFromDatabase.get(i).getTaskType(),tasksFromDatabase.get(i).getCompleted(),tasksFromDatabase.get(i)));
+
                 }
+
 
             }
 
         } catch (Exception e) {
             Log.i("Error : ",e.getMessage());
         }
+
+        all = allTasks.size();
+        incomplete = nonCompletedTasks.size();
+
 
 
 
@@ -121,24 +195,31 @@ public class MainActivity extends AppCompatActivity {
     public void setAll()
     {
         TaskRecycleView = (RecyclerView)findViewById(R.id.displayTaskRecycle);
+        setupDatabase();
 
         layoutManager = new LinearLayoutManager(this);
         taskAdapter = new TaskAdapter(allTasks,MainActivity.this);
         TaskRecycleView.setLayoutManager(layoutManager);
         TaskRecycleView.setAdapter(taskAdapter);
+
+        taskAdapter.notifyDataSetChanged();
     }
 
 
 
     public void startDisplay()
     {
-
+        setupDatabase();
         TaskRecycleView = (RecyclerView)findViewById(R.id.displayTaskRecycle);
 
         layoutManager = new LinearLayoutManager(this);
         taskAdapter = new TaskAdapter(nonCompletedTasks,MainActivity.this);
         TaskRecycleView.setLayoutManager(layoutManager);
         TaskRecycleView.setAdapter(taskAdapter);
+
+
+
+
     }
 
 

@@ -65,23 +65,49 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:id="@+id/displayTaskRecycle"
-            android:scrollbars="vertical"/>
+            android:layout_width="match_parent"
+            android:layout_height="460dp"
+            android:scrollbars="vertical" />
 
 
 
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progressBar2"
+        android:id="@+id/pbUI"
         style="?android:attr/progressBarStyle"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="40dp"
+        android:indeterminateOnly="false"
+        android:progress="60"
+        android:progressDrawable="@drawable/progressbar"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60%"
+
+        android:id="@+id/pbText"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/pbUI"
+        app:layout_constraintEnd_toEndOf="@+id/pbUI"
+        app:layout_constraintStart_toStartOf="@+id/pbUI"
+        app:layout_constraintTop_toTopOf="@+id/pbUI" />
+
+    <TextView
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:id="@+id/tvMessage"
+        android:layout_width="253dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toEndOf="@+id/pbUI"
         app:layout_constraintTop_toTopOf="parent" />
 
 
