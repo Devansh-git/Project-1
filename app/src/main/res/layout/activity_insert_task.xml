@@ -7,39 +7,38 @@
     android:layout_height="match_parent"
     tools:context=".InsertTask">
 
-    <EditText
-        android:id="@+id/etNotifyDate"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="332dp"
-        android:ems="10"
-
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/notDate"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/etNotifyDate"
+        app:layout_constraintBottom_toTopOf="@+id/sltNotDate"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="136dp"
-        android:layout_marginBottom="12dp"
+        android:layout_width="261dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/notTime"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/etNotifyTime"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/etNotifyTime"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="448dp"
+        android:layout_marginEnd="228dp"
+        android:ems="10"
+        android:inputType="time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnBack"
@@ -100,39 +99,6 @@
         app:layout_constraintStart_toEndOf="@+id/spnTaskType"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/comDate"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/etCompletionDate"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/etCompletionDate"
-        android:layout_width="186dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="220dp"
-
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etNotifyTime"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="332dp"
-        android:layout_marginEnd="52dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnSave"
@@ -148,6 +114,45 @@
         app:rippleColor="@color/teal_200"
         app:srcCompat="@drawable/ic_baseline_save_24"
         android:onClick="add"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/comDate"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/sltComDate"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/sltComDate"
+        style="?spinnerStyle"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="220dp"
+        android:onClick="openDatePicker"
+        android:text="Jan 01 2021"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sltNotDate"
+        style="?spinnerStyle"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="336dp"
+        android:onClick="openNotifyDatePicker"
+        android:text="Jan 01 2021"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

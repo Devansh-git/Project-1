@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class MainActivity<var> extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
 
     TaskManager taskManager;
-
+    RelativeLayout relativeLayout;
 
     private double incomplete;
     private double all;
@@ -115,6 +116,9 @@ public class MainActivity<var> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         aSwitch = (Switch)findViewById(R.id.switchShowInComplete);
+
+
+
 
 
 
@@ -229,5 +233,9 @@ public class MainActivity<var> extends AppCompatActivity {
     {
         Intent intent = new Intent(this,InsertTask.class);
         startActivity(intent);
+    }
+
+    public void openSettings(View view) {
+
     }
 }

@@ -3,9 +3,9 @@
     <string name="TaskType">Task Type</string>
     <string name="Task">Task</string>
     <string name="cd" />
-    <string name="comDate">Completion Date</string>
-    <string name="notDate">Notify Date</string>
-    <string name="notTime">Notify Time</string>
+    <string name="comDate">When do want the task to be completed ?</string>
+    <string name="notDate">When do you want to receive notification for the task?</string>
+    <string name="notTime">The time of notification.</string>
     <string name="Done">Done</string>
     <string name="Undo">Undo</string>
 </resources>

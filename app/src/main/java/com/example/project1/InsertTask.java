@@ -2,12 +2,15 @@ package com.example.project1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class InsertTask extends AppCompatActivity {
 
@@ -27,19 +31,24 @@ public class InsertTask extends AppCompatActivity {
     private SpinnerAdapter Adapter;
 
     Spinner spntaskType;
-    EditText Task,comDate,notDate,notTime;
+    EditText Task,notTime;
 
     TaskManager taskManager;
 
+    private DatePickerDialog datePickerDialog;
+    private DatePickerDialog notifyDatePickerDialog;
 
-    String taskType,task,CompletionDate,NotifyDate,NotifyTime;
+    private Button comDatePicker;
+    private Button notDatePicker;
+
+
+    String taskType,task,NotifyTime;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_task);
-
         setUpTaskType();
 
         try{
@@ -72,14 +81,76 @@ public class InsertTask extends AppCompatActivity {
         });
 
 
+        initDatePicker();
+        initNotifyDatePicker();
+        comDatePicker = findViewById(R.id.sltComDate);
+        notDatePicker = findViewById(R.id.sltNotDate);
 
+        comDatePicker.setText(getTodaysDate());
+        notDatePicker.setText(getTodaysDate());
 
 
 
 
     }
 
+    private void initNotifyDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                month=month+1;
+                String date = makeDateString(day,month,year);
+                notDatePicker.setText(date);
 
+            }
+        };
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        notifyDatePickerDialog = new DatePickerDialog(this,style,dateSetListener,year,month,day);
+    }
+
+    private String getTodaysDate() {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month+1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(day,month,year);
+
+    }
+
+    private void initDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                month=month+1;
+                String date = makeDateString(day,month,year);
+                comDatePicker.setText(date);
+
+            }
+        };
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog = new DatePickerDialog(this,style,dateSetListener,year,month,day);
+
+
+    }
+
+    private String makeDateString(int day, int month, int year) {
+        return day + "/" + month  +"/"+ year;
+    }
 
 
     private void setUpTaskType()
@@ -96,18 +167,19 @@ public class InsertTask extends AppCompatActivity {
 
         Task = (EditText)findViewById(R.id.etTask);
         task = Task.getText().toString();
-        comDate = (EditText)findViewById(R.id.etCompletionDate);
-        CompletionDate = comDate.getText().toString();
-        notDate = (EditText)findViewById(R.id.etNotifyDate);
-        NotifyDate = notDate.getText().toString();
+
+        String completionDate = (String) comDatePicker.getText();
+        String notifyDate = (String) notDatePicker.getText();
+
+
         notTime = (EditText)findViewById(R.id.etNotifyTime);
-        NotifyTime = notDate.getText().toString();
+        NotifyTime = notTime.getText().toString();
 
         TaskModel insertTask = new TaskModel();
         insertTask.setTaskType(taskType);
         insertTask.setTask(task);
-        insertTask.setDate(CompletionDate);
-        insertTask.setNotifyDate(NotifyDate);
+        insertTask.setDate(completionDate);
+        insertTask.setNotifyDate(notifyDate);
         insertTask.setNotifyTime(NotifyTime);
         insertTask.setCompleted(0);
 
@@ -117,6 +189,9 @@ public class InsertTask extends AppCompatActivity {
             Log.e("Failed to add because - ", e.getMessage() );
         }
 
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+
     }
 
 
@@ -124,5 +199,13 @@ public class InsertTask extends AppCompatActivity {
     {
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
+    }
+
+    public void openDatePicker(View view) {
+        datePickerDialog.show();
+    }
+
+    public void  openNotifyDatePicker(View view){
+        notifyDatePickerDialog.show();
     }
 }

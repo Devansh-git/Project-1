@@ -3,7 +3,9 @@ package com.example.project1.Adapters;
 import android.content.Context;
 import android.content.Entity;
 import android.content.res.Resources;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -45,8 +48,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TextView taskType;
         public TextView Task,TaskDate;
         public LinearLayout taskLayout;
-        public Button btnCompleted;
 
+        public ImageButton btnCompleted;
 
         public TaskViewHolder(View taskView){
             super(taskView);
@@ -94,12 +97,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         if(dt.getCompleted()==1)
         {
             holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
-            holder.btnCompleted.setText(R.string.Undo);
+
+            holder.btnCompleted.setImageResource(R.drawable.ic_baseline_close_24);
+
         }
         else
         {
-            holder.btnCompleted.setText(R.string.Done);
+
             holder.taskLayout.setBackgroundResource(R.drawable.card_incomplete_layout);
+            holder.btnCompleted.setImageResource(R.drawable.done);
         }
 
         TaskManager taskManager = new TaskManager(context);
@@ -113,14 +119,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
                     holder.taskLayout.setBackgroundResource(R.drawable.card_complete_layout);
 
-                    holder.btnCompleted.setText(R.string.Undo);
+                    holder.btnCompleted.setImageResource(R.drawable.done);
+
+
 
                 }
                 else if(dt.getCompleted()==1)
                 {
                     taskManager.setInCompleted(dt.getTaskModel());
                     holder.taskLayout.setBackgroundResource(R.drawable.card_incomplete_layout);
-                    holder.btnCompleted.setText(R.string.Done);
+                    holder.btnCompleted.setImageResource(R.drawable.ic_baseline_close_24);
+
                 }
 
 
