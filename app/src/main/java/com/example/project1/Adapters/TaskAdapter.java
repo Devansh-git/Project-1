@@ -51,6 +51,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         public ImageButton btnCompleted;
 
+        public ImageButton btnDelete;
+
         public TaskViewHolder(View taskView){
             super(taskView);
             taskType= taskView.findViewById(R.id.taskType);
@@ -59,7 +61,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             taskLayout = taskView.findViewById(R.id.taskLayout);
 
             btnCompleted =taskView.findViewById(R.id.btnSetComplete);
-
+            btnDelete = taskView.findViewById(R.id.btnDelete);
         }
 
 
@@ -136,6 +138,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         });
 
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                taskManager.deleteOne(dt.getTaskModel().getId());
+                Toast.makeText(context, "The Task is Deleted. Click Refresh to Update", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 

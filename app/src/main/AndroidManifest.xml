@@ -6,10 +6,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="App"
-
         android:supportsRtl="true"
         android:theme="@style/Theme.Project1">
-        <activity android:name=".InsertTask"></activity>
+        <activity android:name=".Settings"></activity>
+        <activity android:name=".InsertTask" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

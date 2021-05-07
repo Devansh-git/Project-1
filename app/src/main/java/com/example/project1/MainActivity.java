@@ -119,14 +119,6 @@ public class MainActivity<var> extends AppCompatActivity {
 
 
 
-
-
-
-        setupDatabase();
-        startDisplay();
-
-
-
         aSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -236,6 +228,12 @@ public class MainActivity<var> extends AppCompatActivity {
     }
 
     public void openSettings(View view) {
+        Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
+    }
+
+    public void Refresh(View view) {
+        onStart();
 
     }
 }

@@ -43,7 +43,7 @@ public class TaskManager extends SQLiteOpenHelper {
 
         db.execSQL(tableCreatorString);
 
-        deleteOne(1);
+
     }
 
 
@@ -58,7 +58,6 @@ public class TaskManager extends SQLiteOpenHelper {
     public boolean addOne(TaskModel taskModel) throws Exception{
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
 
         cv.put("TaskType",taskModel.getTaskType());
         cv.put("Task",taskModel.getTask());
@@ -110,6 +109,13 @@ public class TaskManager extends SQLiteOpenHelper {
         SQLiteDatabase db =this.getWritableDatabase();
 
         db.delete(tableName,   "ID = ? ",new String[]{String.valueOf(i)});
+    }
+
+    public void deleteAll()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(tableName,null,null);
     }
 
     public TaskModel getById(int Id) throws Exception{
@@ -190,6 +196,8 @@ public class TaskManager extends SQLiteOpenHelper {
         }
 
     }
+
+
 
 
 }
