@@ -64,12 +64,12 @@
         android:id="@+id/textView6"
         android:layout_width="261dp"
         android:layout_height="18dp"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/notTime"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/etNotifyTime"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/sltNotTime"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -96,15 +96,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etNotifyTime"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="520dp"
-        android:ems="10"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
+    <Button
+        android:id="@+id/sltNotTime"
+        style="?spinnerStyle"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="528dp"
+        android:onClick="openNotifyTimePicker"
+        android:text="12:00 AM"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,8 +114,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/comDate"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/sltComDate"

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.project1.Adapters.SpinnerAdapter;
@@ -37,12 +39,13 @@ public class InsertTask extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
     private DatePickerDialog notifyDatePickerDialog;
+    private TimePickerDialog notifyTimePickerDialog;
 
     private Button comDatePicker;
     private Button notDatePicker;
+    private Button notTimePicker;
 
-
-    String taskType,task,NotifyTime;
+    String taskType,task;
 
 
     @Override
@@ -83,14 +86,67 @@ public class InsertTask extends AppCompatActivity {
 
         initDatePicker();
         initNotifyDatePicker();
+        initNotifyTimePicker();
         comDatePicker = findViewById(R.id.sltComDate);
         notDatePicker = findViewById(R.id.sltNotDate);
 
+        notTimePicker = findViewById(R.id.sltNotTime);
+
         comDatePicker.setText(getTodaysDate());
         notDatePicker.setText(getTodaysDate());
+        notTimePicker.setText(getTime());
 
 
 
+
+
+
+    }
+
+    private String getTime() {
+
+        return "12:00 AM";
+    }
+
+
+    int hod,min;
+
+    public void initNotifyTimePicker(){
+
+        notifyTimePickerDialog = new TimePickerDialog(InsertTask.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String time = makeTimeString(hourOfDay,minute);
+                hod=hourOfDay;
+                min=minute;
+                Calendar calendar =Calendar.getInstance();
+
+                calendar.set(0,0,0,hourOfDay,minute);
+                notTimePicker.setText(makeTimeString(hourOfDay, minute));
+
+            }
+        },12,0,false
+        );
+
+        notifyTimePickerDialog.updateTime(hod,min);
+
+
+
+    }
+
+
+    private String makeTimeString(int hourOfDay,int minute)
+    {
+        if (hourOfDay==0)
+        return "12:"+minute+" AM";
+        else if(hourOfDay<12)
+        return hourOfDay+":"+minute+" AM";
+        else if(hourOfDay==12)
+                return hourOfDay+":"+minute+" PM";
+        else if(hourOfDay<=24)
+            return hourOfDay-12+":"+minute+" PM";
+
+        return "12:00 AM";
 
     }
 
@@ -170,17 +226,17 @@ public class InsertTask extends AppCompatActivity {
 
         String completionDate = (String) comDatePicker.getText();
         String notifyDate = (String) notDatePicker.getText();
+        String notifyTime = (String) notTimePicker.getText();
 
 
-        notTime = (EditText)findViewById(R.id.etNotifyTime);
-        NotifyTime = notTime.getText().toString();
 
         TaskModel insertTask = new TaskModel();
         insertTask.setTaskType(taskType);
         insertTask.setTask(task);
         insertTask.setDate(completionDate);
         insertTask.setNotifyDate(notifyDate);
-        insertTask.setNotifyTime(NotifyTime);
+        insertTask.setNotifyTime(notifyTime);
+
         insertTask.setCompleted(0);
 
         try {
@@ -207,5 +263,11 @@ public class InsertTask extends AppCompatActivity {
 
     public void  openNotifyDatePicker(View view){
         notifyDatePickerDialog.show();
+    }
+
+    public void openNotifyTimePicker(View view) {
+
+        notifyTimePickerDialog.show();
+
     }
 }

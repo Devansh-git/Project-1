@@ -88,7 +88,12 @@ public class MainActivity<var> extends AppCompatActivity {
         pbUi.setProgress(displayPer);
         pbText.setText( displayPer + " %");
 
-       if(displayPer<=25)
+
+        if(allTasks.size()==0)
+        {
+            Messsage.setText("No Tasks.\nAdd some Tasks.");
+        }
+       else if(displayPer<=25)
        {
            Messsage.setText("Completed "+ displayPer + "% of your tasks.\n"+ "Make sure you complete the tasks.");
        }
@@ -108,6 +113,7 @@ public class MainActivity<var> extends AppCompatActivity {
        {
            Messsage.setText("All Tasks Done !!");
        }
+
 
     }
 
